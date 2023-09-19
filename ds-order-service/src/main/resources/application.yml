@@ -1,0 +1,21 @@
+spring:
+  config:
+    import: "optional:configserver:http://config-service:8088"
+    activate:
+      on-profile: docker
+  cloud:
+    compatibility-verifier:
+      enabled: false
+    openfeign:
+      lazy-attributes-resolution: true
+---
+spring:
+  application:
+    name: order-service
+  config:
+    import: "optional:configserver:http://localhost:8088"
+  cloud:
+    compatibility-verifier:
+      enabled: false
+    openfeign:
+      lazy-attributes-resolution: true
