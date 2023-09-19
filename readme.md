@@ -23,6 +23,18 @@ Also, OpenFeign can discover and call services by logical names with Service Dis
 
 @EnableFeignClients
 
+```
+$ curl -d '{"reference":"ORD001", "item":"apple", "qty":10}' -H "Content-Type: application/json" -X POST localhost:8060/order/
+Not enough inventory
+```
+
+### Circuit breaker
+Preventing service failure from cascading to other services which might lead to resource exhaustion.
+```
+$ curl localhost:8060/order/slow/3
+Fallback
+```
+
 ## Build images & run
 `mvn clean package -Pbuild-image` in each module directory
 `docker-compose up`
@@ -32,6 +44,9 @@ Also, OpenFeign can discover and call services by logical names with Service Dis
 curl -d '{"reference":"ORD001", "item":"apple", "qty":10}' -H "Content-Type: application/json" -X POST localhost:8060/order/
 curl localhost:8060/order/ORD001
 ```
+### Checking log
+`docker compose logs order-service`
+
 ### Swagger UI
 http://localhost:8060/swagger-ui.html
 
@@ -53,5 +68,11 @@ Then you can the following log in the first inventory instance.
 distributed-systems-with-spring-inventory-service-1  | 2023-09-19T01:27:13.334Z  INFO 1 --- [nio-8080-exec-1] c.s.d.i.controller.InventoryController   : Checking inventory item apple
 ```
 Then run the service again, you will see log in the second inventory instance
+
+
+
+## TODO
+circuit breaker
+
 
 
